@@ -64,7 +64,7 @@ certbot --agree-tos --register-unsafely-without-email -d ${yournewdomain} -d *.$
 
 echo "[!] Downloading website template"
 # optional download fake website
-wget https://github.com/dc971162/website/raw/refs/heads/main/Atlas.zip -O /tmp/Atlas.zip
+wget https://github.com/bott0n/https_website_setup/raw/refs/heads/main/Atlas.zip -O /tmp/Atlas.zip
 unzip /tmp/Atlas.zip -d /tmp/
 mv /tmp/Atlas/* /var/www/${yournewdomain}/html/
 
