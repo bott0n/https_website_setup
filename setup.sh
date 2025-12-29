@@ -60,8 +60,7 @@ echo "[+] Done! html folder on /var/www/${yournewdomain}/html, logs on /var/www/
 echo "[!] Activate HTTPS for the new domain"
 
 # Activate HTTPS for the new domain.
-certbot --agree-tos --register-unsafely-without-email -d ${yournewdomain} -d *.${yournewdomain}
-
+certbot --agree-tos --register-unsafely-without-email -d ${yournewdomain}
 echo "[!] Downloading website template"
 # optional download fake website
 wget https://github.com/bott0n/https_website_setup/raw/refs/heads/main/Atlas.zip -O /tmp/Atlas.zip
