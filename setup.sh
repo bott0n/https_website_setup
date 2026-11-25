@@ -1,5 +1,9 @@
 #!/bin/bash
 
+sudo su
+apt -y update
+apt-get install -y apache2 certbot python3-certbot-apache unzip
+
 # Check if an argument is provided
 if [ -z "$1" ]; then
   echo "Usage: $0 <yournewdomain>"
@@ -63,8 +67,8 @@ echo "[!] Activate HTTPS for the new domain"
 certbot --agree-tos --register-unsafely-without-email -d ${yournewdomain}
 echo "[!] Downloading website template"
 # optional download fake website
-wget https://github.com/bott0n/https_website_setup/raw/refs/heads/main/Atlas.zip -O /tmp/Atlas.zip
-unzip /tmp/Atlas.zip -d /tmp/
-mv /tmp/Atlas/* /var/www/${yournewdomain}/html/
+wget https://github.com/bott0n/https_website_setup/raw/refs/heads/main/financial.zip -O /tmp/financial.zip
+unzip /tmp/financial.zip -d /tmp/
+mv /tmp/financial/* /var/www/${yournewdomain}/html/
 
 echo "[+] Finished!!!"
