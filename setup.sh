@@ -1,6 +1,13 @@
 #!/bin/bash
 
-sudo su
+# Check if the script is run as root
+if [ "$(id -u)" -ne 0 ]; then
+  echo "Error: This script must be run as root." >&2
+  echo "Try: curl -s <script_url> | sudo bash -s -- ${*:-<yournewdomain>}" >&2
+  echo "  or: sudo bash setup.sh ${*:-<yournewdomain>}" >&2
+  exit 1
+fi
+
 apt -y update
 apt-get install -y apache2 certbot python3-certbot-apache unzip
 
@@ -52,6 +59,8 @@ sed -i 's,${APACHE_LOG_DIR},/var/www/'"${yournewdomain}"'/logs,g' /etc/apache2/s
 # Create backup
 cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bk
 sed -i "/<Directory \/var\/www\/>/a Options FollowSymLinks\n\tAllowOverride None\n\tRequire all granted\n</Directory>\n\n<Directory \/var\/www\/${yournewdomain}\/html>" /etc/apache2/apache2.conf
+# Disable directory listing: remove "Indexes" from the Options of every /var/www directory
+sed -i '/<Directory \/var\/www[^>]*>/,/<\/Directory>/ s/^\(\s*Options\s\+\)Indexes\s\+/\1/' /etc/apache2/apache2.conf
 
 echo "Restarting Apache Service"
 # Config site and Restart Apache service
